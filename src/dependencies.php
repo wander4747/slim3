@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\Web\UserController;
+use App\Repositories\Eloquent\UserEloquentRepository;
 use App\Services\UserService;
 use Illuminate\Database\Capsule\Manager;
 use Slim\App;
@@ -29,13 +30,15 @@ return function (App $app) {
         return $logger;
     };
 
-    $container['db'] = function ($container) use ($capsule){
-
-
+    $container['db'] = function ($c) use ($capsule){
         return $capsule;
     };
 
     $container[UserController::class] = function ($c) {
-        return new UserController(new UserService());
+        return new UserController(new UserService(new UserEloquentRepository()));
+    };
+
+    $container[UserService::class] = function ($c) {
+        return new UserService(new UserEloquentRepository());
     };
 };
