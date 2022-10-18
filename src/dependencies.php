@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\Web\UserController;
+use App\Services\UserService;
 use Slim\App;
 
 return function (App $app) {
@@ -18,5 +20,9 @@ return function (App $app) {
         $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
         $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
         return $logger;
+    };
+
+    $container[UserController::class] = function ($c) {
+        return new UserController(new UserService());
     };
 };
