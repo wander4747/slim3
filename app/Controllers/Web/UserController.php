@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Web;
 
+use App\Models\User;
 use App\Services\UserService;
 
 class UserController

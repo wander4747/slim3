@@ -2,10 +2,17 @@
 
 use App\Controllers\Web\UserController;
 use App\Services\UserService;
+use Illuminate\Database\Capsule\Manager;
 use Slim\App;
 
 return function (App $app) {
     $container = $app->getContainer();
+    $capsule = new Manager();
+    $capsule->addConnection($container['settings']['db']);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
 
     // view renderer
     $container['renderer'] = function ($c) {
@@ -20,6 +27,12 @@ return function (App $app) {
         $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
         $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
         return $logger;
+    };
+
+    $container['db'] = function ($container) use ($capsule){
+
+
+        return $capsule;
     };
 
     $container[UserController::class] = function ($c) {
