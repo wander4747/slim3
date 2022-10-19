@@ -1,6 +1,7 @@
 <?php
 
-use App\Controllers\Web\UserController;
+use App\Controllers\Web\UserController as UserControllerWeb;
+use App\Controllers\Api\UserController as UserControllerApi;
 use App\Repositories\Eloquent\UserEloquentRepository;
 use App\Services\UserService;
 use Illuminate\Database\Capsule\Manager;
@@ -45,7 +46,11 @@ return function (App $app) {
         return new UserService($c->get('userRepository'));
     };
 
-    $container[UserController::class] = function ($c) {
-        return new UserController($c, $c->get('userService'));
+    $container[UserControllerWeb::class] = function ($c) {
+        return new UserControllerWeb($c, $c->get('userService'));
+    };
+
+    $container[UserControllerApi::class] = function ($c) {
+        return new UserControllerApi($c, $c->get('userService'));
     };
 };
