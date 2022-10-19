@@ -17,9 +17,12 @@ return function (App $app) {
 
     // view renderer
     $container['renderer'] = function ($c) {
-        $settings = $c->get('settings')['renderer'];
-        return new \Slim\Views\PhpRenderer($settings['template_path']);
+        $loader = new Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
+        $twig = new Twig\Environment($loader);
+
+        return $twig;
     };
+
 
     // monolog
     $container['logger'] = function ($c) {
@@ -34,11 +37,15 @@ return function (App $app) {
         return $capsule;
     };
 
-    $container[UserController::class] = function ($c) {
-        return new UserController(new UserService(new UserEloquentRepository()));
+    $container['userRepository'] = function ($c) use ($capsule){
+        return new UserEloquentRepository();
     };
 
-    $container[UserService::class] = function ($c) {
-        return new UserService(new UserEloquentRepository());
+    $container['userService'] = function ($c) use ($capsule){
+        return new UserService($c->get('userRepository'));
+    };
+
+    $container[UserController::class] = function ($c) {
+        return new UserController($c, $c->get('userService'));
     };
 };

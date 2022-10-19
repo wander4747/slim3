@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+<form method="post" action="/store">
+    {% if flash.getMessage('success') %}
+        salvou
+    {% endif %}
+{% include "users/_partials/form.html" %}
+</form>
+
+{% endblock %}
