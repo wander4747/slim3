@@ -14,7 +14,7 @@ return function (App $app) {
         $app->get('/delete/{id}', UserControllerWeb::class.':delete');
     });
 
-    $app->group('/api/user', function(App $app) {
+    $app->group('/api/users', function(App $app) {
         $app->get('', UserControllerApi::class.':index');
         $app->post('', UserControllerApi::class.':store');
         $app->get('/{id}', UserControllerApi::class.':show');

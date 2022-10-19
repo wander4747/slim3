@@ -16,13 +16,17 @@ return [
             'level' => \Monolog\Logger::DEBUG,
         ],
         'db' => [
-            'driver' => 'mysql',
-            'host' => 'slim-db',
-            'database' => 'slim',
-            'username' => 'root',
-            'password' => 'slim_password',
+            'driver' => $_ENV['DB_DRIVER'],
+            'host' => $_ENV['DB_HOST'],
+            'database' => $_ENV['DB_NAME'],
+            'username' => $_ENV['DB_USER'],
+            'password' => $_ENV['DB_PASSWORD'],
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
+        ],
+        'db_testing' => [
+            'driver' => 'sqlite',
+            'database' => './tests/db.sqlite',
         ]
     ],
 ];

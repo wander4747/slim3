@@ -10,20 +10,16 @@ use Slim\App;
 return function (App $app) {
     $container = $app->getContainer();
     $capsule = new Manager();
-    $capsule->addConnection($container['settings']['db']);
+    $capsule->addConnection($container['settings'][$_ENV['KEY_DATABASE']]);
 
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 
-
     // view renderer
     $container['renderer'] = function ($c) {
         $loader = new Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-        $twig = new Twig\Environment($loader);
-
-        return $twig;
+        return new Twig\Environment($loader);
     };
-
 
     // monolog
     $container['logger'] = function ($c) {

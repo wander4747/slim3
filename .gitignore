@@ -4,3 +4,4 @@
 .composer/
 .docker/dbdata
 .idea/
+.phpunit.result.cache

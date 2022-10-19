@@ -1,7 +1,22 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true">
     <testsuites>
-        <testsuite name="SlimSkeleton">
-            <directory>tests</directory>
+<!--        <testsuite name="SlimSkeleton">-->
+<!--            <directory>tests</directory>-->
+<!--        </testsuite>-->
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="KEY_DATABASE" value="db_testing"/>
+    </php>
 </phpunit>

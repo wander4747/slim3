@@ -3,9 +3,9 @@
 namespace App\Controllers\Api;
 
 use App\Services\UserService;
+use Exception;
 use Psr\Container\ContainerInterface;
 use Slim\Http\StatusCode;
-use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class UserController
 {
