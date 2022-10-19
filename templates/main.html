@@ -7,10 +7,13 @@
     <title>{{ title }}</title>
 </head>
 <body>
-<div class="container">
     {% include "partials/header.html" %}
-    {% block content %} {% endblock %}
+    <main class="flex-shrink-0">
+        <div class="container mt-4">
+            {% block content %} {% endblock %}
+        </div>
+    </main>
+
     {% include "partials/footer.html" %}
-</div>
 </body>
 </html>

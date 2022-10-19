@@ -44,6 +44,7 @@ class UserController
         try {
             $data = $request->getParsedBody();
             $this->service->store($data);
+            return $response->withHeader('Location', '/');
         } catch (Exception $e) {
             viewError($this->container, $response, "Ocorreu um erro ao salvar o usuário", $e->getMessage());
         }
