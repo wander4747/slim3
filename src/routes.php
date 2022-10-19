@@ -10,5 +10,6 @@ return function (App $app) {
         $app->post('/store', UserController::class.':store');
         $app->get('/edit/{id}', UserController::class.':edit');
         $app->put('/update/{id}', UserController::class.':update');
+        $app->get('/delete/{id}', UserController::class.':delete');
     });
 };

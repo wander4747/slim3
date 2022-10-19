@@ -71,9 +71,20 @@ class UserController
             $data = $request->getParsedBody();
             $this->service->update($id, $data);
 
-            return $response->withHeader('Location', "/edit/{$id}");
+            return $response->withHeader('Location', "/");
         } catch (Exception $e) {
             viewError($this->container, $response, "Ocorreu um erro ao atualizar o usuário", $e->getMessage());
+        }
+    }
+
+    public function delete($request, $response)
+    {
+        try {
+            $id = $request->getAttribute('id');
+            $this->service->delete($id);
+            return $response->withHeader('Location', "/");
+        } catch (Exception $e) {
+            viewError($this->container, $response, "Ocorreu um erro ao deletar o usuário", $e->getMessage());
         }
     }
 }
