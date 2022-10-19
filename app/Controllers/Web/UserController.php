@@ -48,4 +48,32 @@ class UserController
             viewError($this->container, $response, "Ocorreu um erro ao salvar o usuário", $e->getMessage());
         }
     }
+
+    public function edit($request, $response)
+    {
+        $id = $request->getAttribute('id');
+        $user = $this->service->edit($id);
+
+        if (!$user) {
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
+        $response->getBody()->write($this->container->get('renderer')->render('users/update.html', [
+            "title" => "Editar usuário",
+            "user" => $user
+        ]));
+    }
+
+    public function update($request, $response)
+    {
+        try {
+            $id = $request->getAttribute('id');
+            $data = $request->getParsedBody();
+            $this->service->update($id, $data);
+
+            return $response->withHeader('Location', "/edit/{$id}");
+        } catch (Exception $e) {
+            viewError($this->container, $response, "Ocorreu um erro ao atualizar o usuário", $e->getMessage());
+        }
+    }
 }
